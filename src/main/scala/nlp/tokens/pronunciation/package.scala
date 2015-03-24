@@ -21,9 +21,12 @@ package object pronunciation {
     vowelPhonemes.contains(phoneme)
 
   def isRhyme(word1: Pronunciation, word2: Pronunciation): Boolean =
-    reducedRhyme(word1) match {
+    reducedRhyme(word1) match { // I wonder if there's a cleaner way to do this
       case None => false
-      case Some(rhyme) => rhyme  == reducedRhyme(word2)
+      case Some(rhyme1) => reducedRhyme(word2) match {
+        case None => false
+        case Some(rhyme2) => rhyme2 == rhyme1
+      }
     }
 
   /** Two words rhyme if they are the same from the first vowel phoneme
