@@ -1,5 +1,8 @@
 name := "robots"
+organization := "com.wohanley"
+version := "0.1.0-SNAPSHOT"
 scalaVersion := "2.11.6"
+publishMavenStyle := true
 
 // specs2
 libraryDependencies += "org.specs2" %% "specs2-core" % "3.0" % "test"

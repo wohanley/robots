@@ -10,7 +10,7 @@ package object parsing {
   def nounPhrases(nps: Seq[Parse], node: Parse): Seq[Parse] = {
 
     val npsWithNode: Seq[Parse] = node.getType() match {
-      case "NP" => nps.+:(node)
+      case "NP" => nps :+ node
       case _ => nps
     }
 
