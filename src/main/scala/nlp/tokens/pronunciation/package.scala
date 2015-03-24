@@ -35,7 +35,7 @@ package object pronunciation {
   def syllabify(tokens: Seq[String]): Seq[Option[Pronunciation]] = {
     mergeTokens(tokens)
       .map { token =>
-        cmudict.pronunciations.getOrElse(token.toUpperCase(), Set())
+        pronunciationsFromFile("cmudict").getOrElse(token.toUpperCase(), Set())
     }.map(_.headOption)
   }
 

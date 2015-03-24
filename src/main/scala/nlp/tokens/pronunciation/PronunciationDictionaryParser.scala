@@ -20,7 +20,7 @@ object PronunciationDictionaryParser extends RegexParsers {
     case _ ~ num ~ _ => Integer.parseInt(num)
   }
 
-  def key: Parser[nlp.tokens.Word] = word <~ opt(altNumber)
+  def key: Parser[Word] = word <~ opt(altNumber)
 
   /** Phonemes are sometimes followed by a number indicating, I think, stress
     * patterns? w/e I don't care, so just ignore it */

@@ -8,3 +8,6 @@ scalacOptions in Test += "-Yrangepos"
 
 // OpenNLP
 libraryDependencies += "org.apache.opennlp" % "opennlp-tools" % "1.5.3"
+
+// parser combinators
+libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.3"
