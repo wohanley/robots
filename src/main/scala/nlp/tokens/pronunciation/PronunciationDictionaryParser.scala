@@ -20,7 +20,7 @@ object PronunciationDictionaryParser extends RegexParsers {
     case _ ~ num ~ _ => Integer.parseInt(num)
   }
 
-  def key: Parser[Word] = word <~ opt(altNumber)
+  def key: Parser[String] = word <~ opt(altNumber)
 
   /** Phonemes are sometimes followed by a number indicating, I think, stress
     * patterns? w/e I don't care, so just ignore it */
@@ -32,7 +32,7 @@ object PronunciationDictionaryParser extends RegexParsers {
 
   def pronunciation: Parser[Pronunciation] = repsep(syllable, "-")
 
-  def entry: Parser[(Word, Pronunciation)] = word ~ pronunciation ^^ {
+  def entry: Parser[(String, Pronunciation)] = word ~ pronunciation ^^ {
     case w ~ p => (w, p)
   }
 }

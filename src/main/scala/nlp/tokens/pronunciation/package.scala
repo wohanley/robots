@@ -12,8 +12,7 @@ package object pronunciation {
   type Phoneme = Symbol
   type Syllable = Seq[Phoneme]
   type Pronunciation = Seq[Syllable]
-  type Word = String
-  type PronunciationDictionary = Map[Word, Set[Pronunciation]]
+  type PronunciationDictionary = Map[String, Set[Pronunciation]]
 
   private def vowelPhonemes = Set('AA, 'AH, 'AW, 'EH, 'ER, 'EY, 'IH, 'OW , 'UH, 'AE, 'AO, 'AY, 'IY, 'OY, 'UW)
 
@@ -21,27 +20,36 @@ package object pronunciation {
   def isVowel(phoneme: Phoneme): Boolean =
     vowelPhonemes.contains(phoneme)
 
-  /** Two syllables rhyme if they are the same from the first vowel phoneme
-    * onward. */
-  def isRhyme(syll1: Syllable, syll2: Syllable): Boolean =
-    syll2.endsWith(rhymeSyllable(syll1))
+  def isRhyme(word1: Pronunciation, word2: Pronunciation): Boolean =
+    reducedRhyme(word1) match {
+      case None => false
+      case Some(rhyme) => rhyme  == reducedRhyme(word2)
+    }
 
-  def rhymeSyllable(syllable: Syllable): Syllable =
+  /** Two words rhyme if they are the same from the first vowel phoneme
+    * onward. This function chops off that portion of a word, for comparison to
+    * other words (likely in [[isRhyme]]). */
+  def reducedRhyme(word: Pronunciation): Option[Pronunciation] =
+    word match {
+      case Nil => None
+      case head +: rest => Some(fromFirstVowel(head) +: rest)
+    }
+
+  def fromFirstVowel(syllable: Syllable): Syllable =
     syllable.slice(syllable.indexWhere(isVowel), syllable.length)
 
-  def syllabify(tokenizer: Tokenizer)(text: String):
-      Seq[Option[Pronunciation]] = syllabify(tokenizer.tokenize(text))
-
-  def syllabify(tokens: Seq[String]): Seq[Option[Pronunciation]] = {
+  def syllabify
+    (pronunciations: PronunciationDictionary)
+    (tokens: Seq[String]): Seq[Option[Pronunciation]] = {
     mergeTokens(tokens)
       .map { token =>
-        pronunciationsFromFile("cmudict").getOrElse(token.toUpperCase(), Set())
+        pronunciations.getOrElse(token.toUpperCase(), Set())
     }.map(_.headOption)
   }
 
   def pronunciationsFromFile(fileName: String): PronunciationDictionary = {
     val parser = PronunciationDictionaryParser // typing convenience
-    var dictionary = new HashMap[Word, Set[Pronunciation]]
+    var dictionary = new HashMap[String, Set[Pronunciation]]
 
     val scanner = new Scanner(new File(fileName))
     while (scanner.hasNextLine) {

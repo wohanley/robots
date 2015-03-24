@@ -1,7 +1,7 @@
 package tests.nlp
 
 import org.specs2.mutable._
-import nlp._
+import nlp.tokens.pronunciation._
 
 class PackageSpec extends Specification {
 
@@ -22,20 +22,17 @@ class PackageSpec extends Specification {
   }
 
   "isRhyme" should {
-    "return true when syllables rhyme" in {
-      isRhyme(Seq('K, 'AH, 'T), Seq('SH, 'AH, 'T))
-      isRhyme(Seq('S, 'N, 'AA, 'T, 'CH), Seq('K, 'AA, 'T, 'CH))
+    "return true when words rhyme" in {
+      isRhyme(Seq(Seq('K, 'AH, 'T)), Seq(Seq('SH, 'AH, 'T)))
+      isRhyme(Seq(Seq('S, 'N, 'AA, 'T, 'CH)), Seq(Seq('K, 'AA, 'T, 'CH)))
+      isRhyme(
+        Seq(Seq('S, 'K, 'W, 'AA), Seq('T, 'ER)),
+        Seq(Seq('P, 'AA), Seq('T, 'ER)))
     }
 
-    "return false when syllables don't rhyme" in {
-      !isRhyme(Seq('M, 'AE, 'TH), Seq('M, 'OW, 'TH))
-      !isRhyme(Seq('T, 'R, 'UW, 'TH), Seq('M, 'AW, 'TH))
-    }
-  }
-
-  "mergeTokens" should {
-    "combine split contractions" in {
-      Seq("I'd", "never") == mergeTokens(Seq("I", "'d", "never"))
+    "return false when words don't rhyme" in {
+      !isRhyme(Seq(Seq('M, 'AE, 'TH)), Seq(Seq('M, 'OW, 'TH)))
+      !isRhyme(Seq(Seq('T, 'R, 'UW, 'TH)), Seq(Seq('M, 'AW, 'TH)))
     }
   }
 }
