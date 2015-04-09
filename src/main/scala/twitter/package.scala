@@ -15,19 +15,8 @@ package object twitter {
       .setOAuthAccessTokenSecret(Properties.envOrElse("ACCESS_TOKEN_SECRET", ""))
       .build()
 
-  def tweet(config: Configuration)(text: String) {
-
-    val twitter = new TwitterFactory(config).getInstance()
-    val tweet = text.take(140)
-    Try(twitter.updateStatus(tweet)) match {
-      case Success(_) => Unit
-      case Failure(error) => {
-        println("Failed to tweet: " + tweet)
-        println("Tried with config: " + config)
-        println("Error reported: " + error)
-      }
-    }
-  }
+  def tweet(t4j: Twitter)(text: String): Try[Status] =
+    Try(t4j.updateStatus(text.take(140)))
 
   def tweetUrl(status: Status): String =
     "https://twitter.com/" + status.getUser().getScreenName() + "/status/" +
