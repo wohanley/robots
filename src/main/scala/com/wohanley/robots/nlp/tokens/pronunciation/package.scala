@@ -50,7 +50,9 @@ package object pronunciation {
     }.map(_.headOption)
   }
 
-  def pronunciationsFromFile(fileName: String): PronunciationDictionary = {
+  /** Parses the syllabified CMU pronouncing dictionary, which you can find
+    * here: http://webdocs.cs.ualberta.ca/~kondrak/cmudict/cmudict.rep */
+  def parseSyllabifiedCmudict(fileName: String): PronunciationDictionary = {
     val parser = PronunciationDictionaryParser // typing convenience
     var dictionary = new HashMap[String, Set[Pronunciation]]
 
