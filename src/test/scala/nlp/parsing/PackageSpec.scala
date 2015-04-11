@@ -3,7 +3,7 @@ package tests.nlp.parsing
 import opennlp.tools.parser.Parse
 import opennlp.tools.util.Span
 import org.specs2.mutable._
-import nlp.parsing._
+import com.wohanley.robots.nlp.parsing._
 
 
 class PackageSpec extends Specification {

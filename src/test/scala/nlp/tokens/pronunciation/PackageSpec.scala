@@ -1,7 +1,7 @@
 package tests.nlp
 
 import org.specs2.mutable._
-import nlp.tokens.pronunciation._
+import com.wohanley.robots.nlp.tokens.pronunciation._
 
 class PackageSpec extends Specification {
 
