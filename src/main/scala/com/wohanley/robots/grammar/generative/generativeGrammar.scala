@@ -14,8 +14,10 @@ class GenerativeGrammar {
 
   case class ProductionRuleBuilder(symbol: scala.Symbol) {
 
-    def produces(production: Production) = {
-      builtGrammar = upsertToSet(Nonterminal(symbol), production, builtGrammar)
+    def produces(production: ProductionBuilder) = {
+      builtGrammar = upsertToSet(Nonterminal(symbol),
+        production.symbols,
+        builtGrammar)
     }
   }
 
