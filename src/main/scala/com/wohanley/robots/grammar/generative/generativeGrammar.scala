@@ -5,7 +5,7 @@ import com.wohanley.robots.grammar.Grammar
 import com.wohanley.robots.grammar.Nonterminal
 import com.wohanley.robots.grammar.Production
 import com.wohanley.robots.grammar.Terminal
-import com.wohanley.robots.util.upsertToSet
+import com.wohanley.robots.util.insertToSet
 
 
 class GenerativeGrammar {
@@ -15,7 +15,7 @@ class GenerativeGrammar {
   case class ProductionRuleBuilder(symbol: scala.Symbol) {
 
     def produces(productionBuilder: ProductionBuilder) = {
-      builtGrammar = upsertToSet(Nonterminal(symbol),
+      builtGrammar = insertToSet(Nonterminal(symbol),
         productionBuilder.production,
         builtGrammar)
     }
