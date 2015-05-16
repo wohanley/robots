@@ -41,6 +41,7 @@ package object generative {
   def start(grammar: Grammar): Option[Production] =
     produceRandom(grammar, Nonterminal('start))
 
+  /** Randomly generate a text that conforms to the given grammar. */
   def randomText(grammar: Grammar): Option[String] = {
     produceRandom(grammar, Nonterminal('start)).map(production =>
       reduceProduction(grammar, production).mkString
