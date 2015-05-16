@@ -12,9 +12,6 @@ package object generative {
 
   object EmptyAction extends Action(() => Seq(Terminal("")))
 
-  def TerminalAction(value: String): Action =
-    Action(() => Seq(Terminal(value)))
-
 
   def takeRandom[T](xs: Traversable[T]): Option[T] =
     /** toVector is necessary here in case a Set gets passed in. For some
