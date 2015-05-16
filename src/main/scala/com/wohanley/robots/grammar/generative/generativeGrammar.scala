@@ -14,24 +14,28 @@ class GenerativeGrammar {
 
   case class ProductionRuleBuilder(symbol: scala.Symbol) {
 
-    def produces(production: ProductionBuilder) = {
+    def produces(productionBuilder: ProductionBuilder) = {
       builtGrammar = upsertToSet(Nonterminal(symbol),
-        production.symbols,
+        productionBuilder.production,
         builtGrammar)
     }
   }
 
-  case class ProductionBuilder(symbols: Production) {
+  case class ProductionBuilder(production: Production) {
 
-    def then(symbol: grammar.Symbol) = symbols :+ symbol
+    def then(nextProduction: ProductionBuilder) =
+      production ++ nextProduction.production
   }
 
   implicit def symbolToProductionRuleBuilder = ProductionRuleBuilder
+
   implicit def productionToProductionBuilder = ProductionBuilder
   implicit def symbolToProductionBuilder(symbol: scala.Symbol) =
     ProductionBuilder(Seq(Nonterminal(symbol)))
   implicit def stringToProductionBuilder(s: String) =
     ProductionBuilder(Seq(Terminal(s)))
-  implicit def stringToGrammarSymbol = Terminal
-  implicit def symbolToGrammarSymbol = Nonterminal
+  implicit def stringActionToProductionBuilder(f: () => String) =
+    ProductionBuilder(Seq(Action { () =>
+      Seq(Terminal(f()))
+    }))
 }
