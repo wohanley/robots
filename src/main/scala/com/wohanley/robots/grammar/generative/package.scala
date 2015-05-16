@@ -10,8 +10,6 @@ package object generative {
 
   case class Action(f: () => Production) extends grammar.Symbol
 
-  object EmptyAction extends Action(() => Seq(Terminal("")))
-
 
   def takeRandom[T](xs: Traversable[T]): Option[T] =
     /** toVector is necessary here in case a Set gets passed in. For some
