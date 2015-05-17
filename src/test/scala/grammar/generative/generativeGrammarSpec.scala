@@ -12,12 +12,16 @@ class GenerativeGrammarSpec extends Specification {
   "DSL" should {
     "cope with hello world" in {
       object HelloWorld extends GenerativeGrammar {
-        'start      produces ('greeting then ", " then 'body)
+        'start      produces ('greeting andThen ", " andThen 'body)
         'greeting   produces "Hello"
         'body       produces (() => "World")
       }
 
       randomText(HelloWorld.builtGrammar) must_=== Some("Hello, World")
+    }
+
+    "handle multiple choices" in {
+      1 must_=== 1
     }
   }
 }
