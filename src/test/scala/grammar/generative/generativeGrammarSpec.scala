@@ -19,9 +19,5 @@ class GenerativeGrammarSpec extends Specification {
 
       randomText(HelloWorld.builtGrammar) must_=== Some("Hello, World")
     }
-
-    "handle multiple choices" in {
-      1 must_=== 1
-    }
   }
 }
