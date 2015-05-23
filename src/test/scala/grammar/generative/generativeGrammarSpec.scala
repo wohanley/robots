@@ -12,7 +12,7 @@ class GenerativeGrammarSpec extends Specification {
   "DSL" should {
     "cope with hello world" in {
       object HelloWorld extends GenerativeGrammar {
-        'start      produces ('greeting andThen ", " andThen 'body)
+        'start      produces ('greeting ~ ", " ~ 'body)
         'greeting   produces "Hello"
         'body       produces (() => "World")
       }
